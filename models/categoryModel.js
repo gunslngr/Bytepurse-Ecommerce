@@ -5,10 +5,10 @@ const categoryModel = new mongoose.Schema({
     type:String,
     required:true
   },
-  description:{  
+  description:{
     type:String,
     required:true
-  }, 
+  },
   status:{
     type:Boolean,
     default:true
