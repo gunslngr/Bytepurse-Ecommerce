@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Fashi Template">
+  <meta name="keywords" content="Fashi, unica, creative, html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Fashi | Template</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+  <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+  <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+
+  <!-- CSS here -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/slicknav.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="assets/css/themify-icons.css">
+  <link rel="stylesheet" href="assets/css/slick.css">
+  <link rel="stylesheet" href="assets/css/nice-select.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .coupon-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      /* Adjust the gap between buttons */
+      margin-top: 5px;
+      /* Adjust the margin as needed */
+    }
+
+    .site-btn {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 13px 40px 11px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .site-btn:hover {
+      background-color: #333;
+    }
+
+    .add-address-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      /* Adjust the margin as needed */
+    }
+
+    .site-btn {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 13px 40px 11px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .site-btn:hover {
+      background-color: #333;
+    }
+
+    .shipaddrss {
+      margin-top: 120px;
+      text-align: center;
+    }
+
+    .site-btn place-btn dlt {
+      margin-top: 20px;
+    }
+
+    .adressbtns {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 13px 40px 11px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      display: inline-block;
+      margin-bottom: 10px;
+      /* Increase the margin for a larger gap */
+    }
+    .add-funds-button{
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 10px 10px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+      display: inline-block;
+      /* margin-top: 10px; */
+    }
+  </style>
+</head>
+
+<body>
+
+  <%- include("layouts/navbar.ejs") %>
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb-text product-more">
+              <a href="/"><i class="fa fa-home"></i> Home</a>
+              <a href="/shop">Shop</a>
+              <span>Check Out</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb Section ends -->
+
+    <!-- Shopping Cart Section Begin -->
+    <form action="#" class="checkout-form" id="checkoutform">
+      <section class="checkout-section spad">
+        <div class="container">
+
+          <div class="row">
+            <!-- Billing Details -->
+            <div class="col-lg-6">
+              <div class="checkout-content">
+                <a href="#" class="content-btn">Checkout</a>
+                <h4 class="shipaddrss">Shipping Address</h4>
+                <div class="add-address-btn">
+                  <button type="button" id="addAddressBtn" class="site-btn" data-toggle="modal"
+                    data-target="#exampleModalLong">Add Address</button>
+                </div>
+                <% userOrder.address.forEach((address, index)=> { %>
+                  <div class="row d-flex align-items-center" style="margin-top: 30px;" id="addrId">
+                    <div class="col-1">
+                      <input type="radio" name="address" id="address<%= index %>"
+                        value="<%= address.name %>, <%= address.housename %>, <%= address.mobile %>, <%= address.city %>, <%= address.district %>, <%= address.state %>, <%= address.pincode %>"
+                        required />
+                    </div>
+                    <div class="col-7">
+                      <label for="address<%= index %>" class="text-dark">
+                        <%= address.name %>, <%= address.housename %>, <%= address.mobile %>, <br />
+                              <%= address.city %>, <%= address.district %>, <%= address.state %><br>
+                                    <%= address.pincode %>
+                      </label>
+                    </div>
+                    <div class="col-2 ">
+                      <!-- Edit button -->
+                      <a href="/address?userId=<%=userOrder._id  %>&addressId=<%=address._id  %>&check=3"
+                        class="adressbtns" style="border-radius: 6px;">Edit</a>
+                      <!-- Delete button -->
+                      <a href="" onclick="handleDeleteAddress('<%=address._id  %>')" class="adressbtns"
+                        style="border-radius: 6px;">Delete</a>
+                    </div>
+                    <hr>
+                  </div>
+
+                  <% }) %>
+              </div>
+            </div>
+
+            <!-- Coupon and Order Details -->
+            <div class="col-lg-6">
+              <div class="checkout-content">
+                <input type="text" placeholder="Enter Your Coupon Code" id="couponCode">
+                <div class="coupon-buttons">
+                  <button type="button" class="site-btn place-btn" data-toggle="modal"
+                    data-target="#discountModal">Available Coupon</button>
+                  <a href="" class="site-btn place-btn" id="cButton" onclick="applyCoupon()">Apply Coupon</a>
+                </div>
+              </div>
+              <div class="place-order">
+                <h4>Your Order</h4>
+                <div class="order-total">
+                  <ul class="order-table">
+                    <li>Product <span>Total</span></li>
+                    <% let sum=0 %>
+                      <% userOrder.cart.forEach((cart)=> { %>
+                        <li class="fw-normal">
+                          <%= cart.productId.title %> x <%= cart.quantity %> <span>₹ <%= cart.total %>
+                              </span>
+                        </li>
+                        <% sum=sum + cart.total %>
+                          <% }) %>
+                            <li class="fw-normal">Cart Total<span>₹ <%= sum %></span></li>
+                            <li class="fw-normal">Coupon discount<span id="couponDiscount">0</span></li>
+                            <li class="d-flex total-price">
+                              <span>Total</span>
+                              <span>₹ <span id="grandTotal">
+                                  <%= userOrder.grandTotal %>
+                                </span></span>
+                            </li>
+                  </ul>
+                  <div class="payment-check">
+                    <div class="pc-item">
+                      <label for="pc-check">
+                        COD
+                        <input type="checkbox" id="pc-check" name="paymentMethod" value="COD">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <div class="pc-item">
+                      <label>
+                        Razorpay
+                        <input type="checkbox" id="pc-check" name="paymentMethod" value="ONLINE">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <% if (userOrder.wallet>= userOrder.grandTotal) { %>
+                      <div class="pc-item">
+                        <label>
+                          Wallet
+                          <input type="checkbox" id="pc-check" name="paymentMethod" value="WALLET">
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                      <% } else { %>
+                        <div class="add-funds">
+                          <p style="margin-top: 20px;">Not enough funds in wallet please add fund.</p>
+                          <button id="add-funds-button" class="add-funds-button" data-toggle="modal" data-target="#form">Add Funds</button>
+                        </div>
+                        <% } %>
+
+
+                  </div>
+                  <% if(userOrder.address.length===0){ %>
+                    <div class="row align-items-end">
+                      <div class="col-md-12">
+                        <div class="order-btn">
+                          <button type="submit" class="site-btn place-btn py-3 px-4" disabled>Place an order</button>
+                        </div>
+                      </div>
+                    </div>
+                    <% }else{ %>
+                      <div class="row align-items-end">
+                        <div class="col-md-12">
+                          <div class="order-btn">
+                            <button type="submit" class="site-btn place-btn py-3 px-4">Place an order</button>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+                        <!-- <% if(userOrder.address.length===0){ %>
+                                    <div class="order-btn">
+                                        <button type="submit" class="site-btn place-btn" disabled>Place an order</button>
+                                    </div>
+                                    <% }else{ %>
+                                        <div class="order-btn">
+                                            <button type="submit" class="site-btn place-btn">Place an order</button>
+                                        </div>
+                                        <% } %> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+    </div>
+    <div class="modal fade rounded-0" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered rounded-0" role="document">
+        <div class="modal-content rounded-0">
+          <form id="wallet-form">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="email1">Enter Amount</label>
+                <input type="number" class="form-control" id="amount" aria-describedby="emailHelp"
+                  placeholder="Enter Amount">
+
+                <p id="err" class="text-danger"></p>
+              </div>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="submit" class="btn btn-success rounded-0">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--/.container-->
+
+
+    <div class="modal fade top rounded-0" id="successModal" tabindex="-1" role="dialog"
+      aria-labelledby="successModalLabel" aria-hidden="true" data-backdrop="true">
+      <div class="modal-dialog modal-dialog-centered modal-full-width modal-full-width" role="document">
+        <div class="modal-content rounded-0">
+          <div class="modal-header bg-danger rounded-0">
+            <h5 class="modal-title" id="successModalLabel">Payment failed</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Unfortunately couldn't complete payment</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    </form>
+    <!-- Shopping Cart Section End -->
+
+    <div class="modal fade mt-5" id="discountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <% if( availableCoupons && availableCoupons.length> 0) { %>
+          <% for( coupon of availableCoupons ) { %>
+            <div class="modal-content rounded-0">
+              <div class="modal-body text-center">
+                <div class="icon text-danger">
+                  <i class="fas fa-gift"></i>
+                </div>
+                <div class="notice">
+                  <h4>Get <%= coupon.discountAmount %> Discount</h4>
+                  <p>This coupon is only available for purchases above ₹ <%= coupon.minAmount %>
+                  </p>
+                  <p>Valid from <%= moment(coupon.createdAt).format('MM/DD/YYYY') %> to <%=
+                        moment(coupon.expiryDate).format('MM/DD/YYYY') %>
+                  </p>
+                  <p>Use promo code <span style="font-size: medium;" class="badge badge-info">
+                      <%= coupon.couponCode %>
+                    </span></p>
+                </div>
+                <div class="code"></div>
+              </div>
+            </div>
+            <% } %>
+              <% } else { %>
+                <div class="modal-content rounded-0">
+                  <div class="modal-body text-center">
+                    <div class="icon text-danger">
+                      <i class="fas fa-times-circle fa-5x"></i>
+                    </div>
+                    <div class="notice mt-3">
+                      <h4 class="text-danger">No Available Coupons for You</h4>
+                      <p class="lead">Unfortunately, there are no coupons currently available for your purchases.</p>
+                    </div>
+                    <div class="code"></div>
+                  </div>
+                </div>
+
+                <% } %>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/orderAddress">
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter the Name" required />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">House name</label>
+                <input type="text" name="housename" id="housename" class="form-control"
+                  placeholder="Enter the House name" required />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">City</label>
+                <input type="text" name="city" id="city" class="form-control" placeholder="Enter the City" required />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">Disctrict</label>
+                <input type="text" name="district" id="discrict" class="form-control" placeholder="Enter the Disctrict"
+                  required />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">State</label>
+                <input type="text" name="state" id="state" class="form-control" placeholder="Enter the state"
+                  required />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">Mobile</label>
+                <input type="text" name="mobile" id="phone" class="form-control" placeholder="Enter the Mobile"
+                  required />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="email1">pincode</label>
+                <input type="text" name="pincode" id="pincode" class="form-control" placeholder="enter the pincode"
+                  required />
+              </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <a href="/checkout" class="" > <button class="btn btn-dark" data-dismiss="modal">Close</button></a> -->
+
+            <button type="submit" class="btn btn-primary">Add New Address</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Shopping Cart Section End -->
+
+
+    <%- include('layouts/footer.ejs') %>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script>
+        const err = document.getElementById('err');
+
+        document.getElementById('wallet-form').addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          const amountField = document.getElementById('amount');
+          const amount = parseFloat(amountField.value.trim());
+
+          if (isNaN(amount) || amount <= 0) {
+            err.innerHTML = 'Amount must be a positive number!';
+            amountField.value = ''; // Clear the input field
+            return;
+          }
+
+          try {
+            const response = await axios.post('/add-to-wallet', { amount });
+
+            if (response.data.success) {
+              window.location = '/checkout';
+            } else {
+              console.error('Failed to add funds to the wallet.');
+            }
+          } catch (error) {
+            console.error('An error occurred:', error.message);
+          }
+        });
+
+        // Add an event listener to the input to clear the error message on input change
+        document.getElementById('amount').addEventListener('input', function () {
+          err.innerHTML = '';
+        });
+
+        $('#checkoutform').submit((e) => {
+          let address = $("input[name=address]:checked").val()
+          let paymentMethod = $('input[name=paymentMethod]:checked').val()
+          let grandTotal = parseInt($('#grandTotal').text().trim());
+          e.preventDefault()
+          $.ajax({
+            url: '/placeOrder',
+            method: 'post',
+            data: {
+              address: address,
+              paymentMethod: paymentMethod,
+              grandTotal: grandTotal,
+            },
+            success: (response) => {
+
+              if (response.codSuccess == true) {
+                location.href = '/orderConfirm'
+              } else {
+                razorpayPayment(response.order);
+
+              }
+            }
+          })
+        })
+        function razorpayPayment(order) {
+          console.log(order);
+          var options = {
+            "key": 'rzp_test_uamgEp3sMl3d1Q', // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "BytePurse",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+              verifyPayment(response, order)
+            },
+            "prefill": {
+              "name": "Gaurav Kumar",
+              "email": "gaurav.kumar@example.com",
+              "contact": "9000090000"
+            },
+            "notes": {
+              "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+              "color": "#3399cc"
+            }
+          };
+          var rzp1 = new Razorpay(options);
+          rzp1.open();
+        }
+        function verifyPayment(payment, order) {
+          $.ajax({
+            url: 'verifyPayment',
+            data: {
+              payment,
+              order
+            },
+            method: 'post',
+            success: (response) => {
+              if (response.success == true) {
+                location.href = '/orderConfirm'
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Payment has failed',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              }
+            },
+
+
+          })
+        }
+        const handleDeleteAddress = async (addressId) => {
+          try {
+            event.preventDefault();
+
+            // Display the confirmation message
+            swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will not be able to recover this address!",
+              icon: "warning",
+              buttons: ["Cancel", "OK"],
+              dangerMode: true,
+            }).then(async (willDelete) => {
+              if (willDelete) {
+                // User clicked "OK" button, perform the delete action
+                const deleteItem = await axios.put('/deleteAddress', { addressId });
+
+                if (deleteItem.data.success) {
+                  // Remove the deleted element from the DOM
+                  const elementToRemove = document.getElementById('addrId');
+                  elementToRemove.parentNode.removeChild(elementToRemove);
+                }
+              }
+            });
+          } catch (error) {
+            console.log(error.message);
+          }
+        };
+
+        function applyCoupon() {
+          event.preventDefault()
+          const couponCode = document.getElementById("couponCode").value.trim();
+          const cartTotal = document.getElementById('grandTotal').innerHTML
+          console.log(cartTotal);
+          console.log(couponCode);
+          if (couponCode !== "") {
+            axios.post("/applyCoupon", { couponCode, cartTotal })
+              .then(response => {
+                const { wrongcp, minAmounts, expired, applied, minAmount, discountedTotal, discountAmount, usedCoupon, onetime } = response.data
+                if (applied) {
+                  document.getElementById('couponDiscount').innerHTML = discountAmount
+                  document.getElementById('grandTotal').innerHTML = discountedTotal
+                  document.getElementById("cButton").disabled = true;
+                  console.log("hi button");
+                  swal("Copon added successfully", "", "success");
+                } else if (wrongcp) {
+                  swal("Not available");
+                } else if (minAmounts) {
+                  swal(`You should purchase atleast ${minAmount}`);
+                } else if (expired) {
+                  swal("coupon has expired");
+                } else if (usedCoupon) {
+                  swal("coupon has already used");
+                } else if (onetime) {
+                  swal("You already used one coupon");
+                }
+              })
+              .catch(error => {
+                // Handle any errors that occur during the request
+                console.log(error);
+              });
+          }
+        }
+
+
+      </script>

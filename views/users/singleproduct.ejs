@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashi | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* .imgbody {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } */
+
+        .imagezoom {
+            position: relative;
+            width: 60%;
+            height: 100%;
+            overflow: hidden;
+            /* border: 5px solid white;
+            box-shadow: -1px 5px 15px black; */
+        }
+
+        .imagezoom img {
+            position: absolute;
+            /* width: 100%;
+            height: 100%; */
+            -o-object-fit: cover;
+            object-fit: cover;
+            transform: scale(var(--zoom, 1));
+            transform-origin: var(--x) var(--y);
+            transition: transform 0.3s ease;
+        }
+
+        .imagezoom:hover {
+            --zoom: 3;
+        }
+
+        .product-tab {
+            margin-top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <%- include("layouts/navbar.ejs") %>
+
+        <!-- Breadcrumb Section Begin -->
+        <div class="breacrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-text product-more">
+                            <a href="#"><i class="fa fa-home"></i> Home</a>
+                            <a href="#">Shop</a>
+                            <span>Detail</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb Section Begin -->
+
+        <!-- Product Shop Section Begin -->
+        <section class="product-shop spad page-details">
+            <div class="container">
+                <div class="imgbody row">
+                    <div class="col-lg-6 mb-5 ftco-animate">
+                        <div class="imagezoom product-thumbs">
+                            <img id="main-image" src="/productImages/resized/<%=singleProduct.image[0]%>"
+                                alt="Main Product Image" />
+                        </div>
+
+                        <div class="product-thumbs-track ps-slider owl-carousel" style="margin-top: 20px;">
+                            <div class="pt">
+                                <img id="additional-image" src="/productImages/resized/<%= singleProduct.image[0] %>"
+                                    onclick="changeMainImage(this.src)" class="img-fluid" alt="Additional Image 1" />
+                            </div>
+                            <% for (let i=1; i < singleProduct.image.length; i++) { %>
+                                <div class="pt">
+                                    <img id="additional-image"
+                                        src="/productImages/resized/<%= singleProduct.image[i] %>"
+                                        onclick="changeMainImage(this.src)" class="img-fluid"
+                                        alt="Additional Image <%= i + 1 %>" />
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="product-details">
+                            <div class="pd-title">
+                                <span>
+                                    <%=singleProduct.category.name %>
+                                </span>
+                                <h3>
+                                    <%=singleProduct.title %>
+                                </h3>
+                               
+                                <a   href=""
+                                onclick="addToWishlist('<%=singleProduct._id%>')" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                            </div>
+                            <div class="pd-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <span>(5)</span>
+                            </div>
+                            <div class="pd-desc">
+                                <p>
+                                    <%=singleProduct.description %>
+                                </p>
+                                <h4>₹ <%=singleProduct.price %> <span>
+                                            <%= product.price + 100 %>
+                                        </span></h4>
+                            </div>
+
+                            <div class="quantity">
+                                <% if(singleProduct.quantity==0){ %>
+                                    <h4 class="text-danger">Out of stock...!</h4>
+                                    <% } else if(singleProduct.quantity < 10){ %>
+                                        <p>
+                                            <a href=""
+                                                onclick="addToCart('<%=singleProduct._id%>', 1 ,'<%= singleProduct.price%>')"
+                                                class="primary-btn pd-cart">Add to Cart</a>
+                                        </p>
+                                        <% } else { %>
+                                            <p>
+                                                <a href=""
+                                                    onclick="addToCart('<%=singleProduct._id%>',1,'<%= singleProduct.price%>')"
+                                                    class="primary-btn pd-cart">Add to Cart</a>
+                                            </p>
+                                            <% } %>
+                            </div>
+                            <ul class="pd-tags">
+                                <li><span>CATEGORIES</span>: <%=singleProduct.category.name %>
+                                </li>
+                            </ul>
+                            <div class="pd-share">
+                                <div class="pd-social">
+                                    <a href="#"><i class="ti-facebook"></i></a>
+                                    <a href="#"><i class="ti-twitter-alt"></i></a>
+                                    <a href="#"><i class="ti-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Tab Section Begin -->
+                <div class="product-tab">
+                    <div class="tab-item">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-item-content">
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                                <div class="customer-review-option">
+                                    <h4>Product Reviews</h4>
+                                    <% if (products[0].review.length===0) { %>
+                                        <p>No reviews yet.</p>
+                                        <% } else { %>
+                                            <div class="comment-option">
+                                                <% for (let review of product[0].review) { %>
+                                                    <div class="co-item">
+                                                        <div class="avatar-text">
+                                                            <h5>
+                                                                <%= review.user.fname %>
+                                                            </h5>
+                                                            <div class="at-reply">
+                                                                <%= review.review %>
+                                                            </div>
+                                                            <a href="" style="color: black;"
+                                                                onclick="deleteReview('<%= review._id %>', '<%= products[0]._id %>')">delete
+                                                                review</a>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                            </div>
+                                            <% } %>
+                                                <% if (singleProduct) { %>
+                                                    <div class="leave-comment">
+                                                        <h4>Leave A Review</h4>
+                                                        <form id="reviewForm" action="/review" method="post"
+                                                            class="comment-form">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <textarea name="review" id="review"
+                                                                        placeholder="Type your review"></textarea>
+                                                                    <% if(typeof succMessage !=='undefined' ){ %>
+                                                                        <p style="color: #4caf50; margin-top: -10px">
+                                                                            <%= succMessage %>
+                                                                        </p>
+                                                                        <% } %>
+                                                                            <% if(typeof errMessage !=='undefined' ){ %>
+                                                                                <p
+                                                                                    style="color: #f44336; margin-top: -10px">
+                                                                                    <%= errMessage %>
+                                                                                </p>
+                                                                                <% } %>
+                                                                                    <div class="error-message"
+                                                                                        style="color: red;"
+                                                                                        id="codeError"></div>
+                                                                                    <input type="hidden" name="id"
+                                                                                        value="<%=singleProduct._id%>">
+                                                                                    <button
+                                                                                        onclick="return validateForm()"
+                                                                                        type="submit"
+                                                                                        class="site-btn">Submit
+                                                                                        Review</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Tab Section End -->
+            </div>
+        </section>
+        <!-- Product Shop Section End -->
+
+
+        <!-- Related Products Section Begin -->
+        <div class="related-products spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <h2>Related Products</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <% for(let product of products) { const category=product.category; if(category.status===true) { %>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="product-item">
+                                <div class="pi-pic">
+                                    <img src="/productImages/resized/<%= product.image[0] %>" alt="">
+                                    <div class="icon">
+                                        <a href="" onclick="addToWishlist('<%=singleProduct._id%>')"><i
+                                                class="icon_heart_alt"></i></a>
+
+                                    </div>
+                                    <ul>
+                                        <% if(singleProduct.quantity==0) { %>
+                                            <h4 class="text-danger">Out of stock...!</h4>
+                                            <% } else if(singleProduct.quantity < 10) { %>
+                                                <li class="w-icon active">
+                                                    <a href=""
+                                                        onclick="addToCart('<%=singleProduct._id%>', 1, '<%= singleProduct.price%>')">
+                                                        <i class="icon_bag_alt"></i>
+                                                    </a>
+                                                </li>
+                                                <% } else { %>
+                                                    <li class="w-icon active">
+                                                        <a href=""
+                                                            onclick="addToCart('<%=singleProduct._id%>', 1, '<%= singleProduct.price%>')">
+                                                            <i class="icon_bag_alt"></i>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+                                                        <li class="quick-view"><a
+                                                                href="/singleProduct?id=<%= product._id %>">+ Quick
+                                                                View</a></li>
+                                    </ul>
+                                </div>
+                                <div class="pi-text">
+                                    <div class="catagory-name">
+                                        <%= product.category.name %>
+                                    </div>
+                                    <a href="#">
+                                        <h5>
+                                            <%= product.title %>
+                                        </h5>
+                                    </a>
+                                    <div class="product-price">
+                                        <%= product.price %>
+                                            <span>
+                                                <%= product.price + 100 %>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } } %>
+                </div>
+            </div>
+        </div>
+        <!-- Related Products Section End -->
+
+        <script>
+            const user = "<%=user%>";
+            function validateForm() {
+                const user = "<%= user %>"; // Assuming user is a variable available in your template
+
+                if (!user) {
+                    // User is not logged in
+                    swal({
+                        title: "Please Login And Review Our Products",
+                    }).then(() => {
+                        window.location.href = "/login";
+                    });
+                    return false; // Return false to prevent form submission
+                }
+
+                const review = document.getElementById("review").value.trim();
+                const words = review.split(/\s+/);
+
+                const error = document.getElementById('codeError')
+                error.textContent = ''
+
+                if (words.length < 3) {
+                    error.textContent = 'Please enter a review with at least 3 words'
+                    return false;
+                }
+                if (review === "") {
+                    error.textContent = 'Cannot submit spaces'
+                    return false;
+                }
+
+                return true;
+            }
+            function deleteReview(reviewId, productId) {
+                $.ajax({
+                    url: '/deletereview',
+                    method: 'post',
+                    data: {
+                        reviewId,
+                        productId
+                    },
+                    success: (response) => {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted',
+                                text: 'Your review has been deleted successfully',
+                                timer: 1800
+                            }).then(() => {
+                                var query = response.query
+                                console.log(query);
+                                $('#reloadDivv').load(`/shop-details?id=${query} #reloadDivv`)
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Sorry',
+                                text: 'Somethog went wrong',
+                                timer: 1800
+                            })
+                        }
+                    }
+                })
+            }
+
+            const totalStock = parseInt("<%=singleProduct.quantity %>");
+
+            document.querySelectorAll('.imagezoom').forEach(elem => {
+                let x, y, width, height;
+                elem.onmouseenter = () => {
+                    const size = elem.getBoundingClientRect();
+
+                    x = size.x;
+                    y = size.y;
+                    width = size.width;
+                    height = size.height;
+                };
+
+                elem.onmouseenter = e => {
+                    const horizontal = (e.clientX - x) / width * 100;
+                    const vertical = (e.clientX - y) / height * 100;
+
+                    elem.style.setProperty('--x', horizontal + '%');
+                    elem.style.setProperty('--y', vertical + '%');
+                };
+            });
+
+            const addToCart = async (productId, quantity, singlePrice) => {
+
+                try {
+                    event.preventDefault();
+                    if (user) {
+                        const productData = await axios.post("/addToCart", {
+                            productId,
+                            quantity,
+                            singlePrice,
+                            totalStock,
+                        });
+
+                        if (productData.data.count) {
+                            document.getElementById(
+                                "cartCount"
+                            ).innerHTML = `<span class="icon-shopping_cart" ></span>${productData.data.count}`;
+                            swal("Added to cart", "", "success");
+                        }
+                        if (productData.data.message) {
+                            swal("Added to cart", "", "success");
+                        }
+
+                        if (productData.data.cartMessage) {
+                            swal("Cart quantity reaches the limit");
+                        }
+                        return productData;
+                    } else {
+                        swal({
+                            title: "Please Login And Explore Our Products",
+                        }).then(() => {
+                            window.location.href = "/login";
+                        });
+                    }
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+             const addToWishlist = async (productId) => {
+        try {
+          event.preventDefault();
+          if (user) {
+            const wishlistData = await axios.put("/wishlist", { productId });
+            const { count } = wishlistData.data;
+            console.log(count);
+            swal("Added to wishlist", "", "success");
+            if (wishlistData.data.success === false) {
+              swal("Product already exist in the wishlist");
+            }
+            if (count || count === 0) {
+              document.getElementById(
+                "wishlistCount"
+              ).innerHTML = `<span><i class="ion-ios-heart"></i></span>${count}`;
+            }
+          } else {
+            swal({
+              title: "Please Login And Explore Our Products",
+            }).then(() => {
+              window.location.href = "/login";
+            });
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+            $(document).ready(function () {
+                var quantity = 1; // Set the initial quantity to 1
+                $(".quantity-right-plus").click(function (e) {
+                    e.preventDefault();
+                    var quantity = parseInt($("#quantity").val());
+                    $("#quantity").val(quantity + 1);
+                });
+
+                $(".quantity-left-minus").click(function (e) {
+                    e.preventDefault();
+                    var quantity = parseInt($("#quantity").val());
+                    if (quantity > 1) {
+                        // Only decrement if quantity is greater than 1
+                        $("#quantity").val(quantity - 1);
+                    }
+                });
+            });
+
+            document.querySelectorAll(".image").forEach((elem) => {
+                let x, y, width, height;
+                elem.onmouseenter = () => {
+                    const size = elem.getBoundingClientRect();
+
+                    x = size.x;
+                    y = size.y;
+                    width = size.width;
+                    height = size.height;
+                };
+                elem.onmousemove = (e) => {
+                    const horizontal = ((e.clientX - x) / width) * 100;
+                    const vertical = ((e.clientY - y) / height) * 100;
+                    elem.style.setProperty("--x", horizontal + "%");
+                    elem.style.setProperty("--y", vertical + "%");
+                };
+            });
+
+            let mainImageSrc = document.getElementById("main-image").src;
+
+            function changeMainImage(clickedSrc) {
+                const mainImage = document.getElementById("main-image");
+                const tempSrc = mainImage.src;
+
+                mainImage.src = clickedSrc;
+                mainImageSrc = clickedSrc;
+
+                event.target.src = tempSrc;
+            }
+        </script>
+
+        <%- include('layouts/footer.ejs') %>

@@ -1,0 +1,115 @@
+<%- include('layouts/header.ejs') %>
+<%- include("layouts/navbar.ejs") %>
+  <!-- Register Section Begin -->
+  <div class="register-login-section spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="login-form">
+            <h2>Email OTP Verification</h2>
+            <% if(typeof succMessage !=='undefined' ){ %>
+              <p style="color: green" class="text-center mt-3">
+                <%= succMessage %>
+              </p>
+              <% } %>
+                <% if(typeof errMessage !=='undefined' ){ %>
+                  <p style="color: #f44336; margin-top: -10px">
+                    <%= errMessage %>
+                  </p>
+                  <% } %>
+                    <% if(typeof formessage !=='undefined' ){ %>
+                      <form action="/otp" method="post" onsubmit="return validateOTP()">
+                        <div class="group-input">
+                          <label for="otp">OTP</label>
+                          <input type="text" class="form-control" id="otp" placeholder="Enter the OTP" name="Otp"
+                            required />
+                          <input type="hidden" name="forgot" value="<%=formessage %>">
+                          <input type="hidden" name="email" value="<%=email  %>">
+                        </div>
+
+
+                        <input type="submit" class="site-btn login-btn" value="Verify">
+                        <div class="text-center mt-5" id="otp-expired-message" style="display: none;">
+                          <span class="d-block mobile-text">Don't receive the code?</span>
+                          <a class="font-weight-bold text-danger cursor" href="/otpResend">Resend</a>
+                        </div>
+                      </form>
+                      <div id="otp-timer" class="text-center mt-3"></div>
+                      <p id="otp-expired-message" class="text-danger text-center" style="display: none;">OTP has expired
+                      </p>
+                      <% }else{%>
+                        <form action="/otp" method="post" onsubmit="return validateOTP()">
+                          <div class="form-group">
+                            <label for="otp">OTP</label>
+                            <input type="text" class="form-control" id="otp" placeholder="Enter the OTP" name="Otp"
+                              required />
+                          </div>
+                          <input type="submit" class="site-btn login-btn" value="Verify">
+                          <div class="text-center mt-5" id="otp-expired-message" style="display: none;">
+                            <span class="d-block mobile-text">Don't receive the code?</span>
+                            <a class="font-weight-bold btn btn-danger cursor" href="/otpResend">Resend</a>
+                          </div>
+                        </form>
+                        <div id="otp-timer" class="text-center mt-3"></div>
+                        <p id="otp-expired-message" class="text-danger text-center" style="display: none;">OTP has
+                          expired</p>
+                        <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function validateOTP() {
+      const otpInput = document.getElementById("otp");
+      const otpValue = otpInput.value.trim();
+
+      // Check if the OTP is a 4-digit number
+      const otpRegex = /^\d{4}$/;
+      if (!otpRegex.test(otpValue)) {
+        alert("Please enter a valid 4-digit OTP.");
+        return false; // Prevent form submission
+      }
+
+      return true; // Allow form submission
+    }
+
+    let otpTimer;
+
+    const startOTPTimer = () => {
+      const otpExpirationTime = 30; // Set the OTP expiration time in seconds (e.g., 5 minutes)
+
+      let timeRemaining = otpExpirationTime;
+
+      otpTimer = setInterval(() => {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+
+        // Display the timer in the HTML element with id "otp-timer"
+        document.getElementById("otp-timer").textContent = `OTP Expires in: ${minutes}:${seconds}`;
+
+        timeRemaining--;
+
+        if (timeRemaining < 0) {
+          // OTP has expired
+          clearInterval(otpTimer);
+          document.getElementById("otp-timer").textContent = "";
+          document.getElementById("otp-expired-message").style.display = "block";
+          // Perform any necessary actions when OTP expires
+        }
+      }, 1000); // Update the timer every second (1000 milliseconds)
+    };
+
+    // Call the function to start the OTP timer
+    startOTPTimer();
+  </script>
+
+
+
+  <!-- Include Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <%- include('layouts/footer.ejs') %>

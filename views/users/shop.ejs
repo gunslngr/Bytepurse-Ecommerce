@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashi | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Style for the individual page number boxes */
+        .page-box {
+            display: inline-block;
+            width: 30px;
+            /* Adjust the width as needed */
+            height: 30px;
+            /* Adjust the height as needed */
+            text-align: center;
+            line-height: 30px;
+            /* Center text vertically */
+            margin: 5px;
+            /* Add spacing between boxes */
+            border: 1px solid #000;
+            /* Border style */
+            border-radius: 5px;
+            /* Add rounded corners */
+            text-decoration: none;
+            /* Remove underline from links */
+            color: #000;
+            /* Text color */
+            margin-top: 80px;
+        }
+
+        /* Style for the active page number box */
+        .page-box.active {
+            background-color: #000;
+            /* Background color for the active page */
+            color: #fff;
+            /* Text color for the active page */
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+
+    <%- include("layouts/navbar.ejs") %>
+
+        <!-- Breadcrumb Section Begin -->
+        <div class="breacrumb-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcrumb-text">
+                            <a href="/"><i class="fa fa-home"></i> Home</a>
+                            <span>Shop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb Section Begin -->
+
+        <!-- Product Shop Section Begin -->
+        <section class="product-shop spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                        <div class="filter-widget">
+                            <h4 class="fw-title">Categories</h4>
+                            <ul class="filter-catagories">
+                                <li><a <% if (!cat){%>class="active"<%}%> href="/shop">All</a></li>
+                                <% category.forEach((item)=>{%>
+                                    <li>
+                                        <a <% if ( item._id==cat ){%> class="active"<%}%> href="/shop?cat=<%=item._id %>
+                                                    &search=<%= search %>"
+                                                        ><%=item.name %></a>
+                                    </li>
+                                    <%}) %>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 order-1 order-lg-2">
+                        <div class="product-show-option">
+                            <div class="row">
+                                <div class="col-lg-7 col-md-7">
+                                    <div class="select-option">
+
+                                        <select id="sort-dropdown" class="sorting" onchange="sortProducts(this.value)">
+                                            <option value="default" <%=sort==='default' ? 'selected' : '' %>>Default
+                                                Sorting</option>
+                                            <option value="price-asc" <%=sort==='price-asc' ? 'selected' : '' %>>Price:
+                                                Low to High</option>
+                                            <option value="price-desc" <%=sort==='price-desc' ? 'selected' : '' %>
+                                                >Price: High to Low</option>
+                                        </select>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5 col-md-5 text-right">
+
+                                    <form class="search-form d-flex align-items-center">
+                                        <div class="form-group mb-0 me-2 col-sm-8 col-md-9">
+                                            <input type="text" class="form-box f-right" name="search"
+                                                placeholder="Search for products..." value="<%= search %>"
+                                                style="border: 0px;" />
+                                            <input type="hidden" name="cat" value="<%= cat %>" id="" />
+                                        </div>
+
+                                        <button type="submit"
+                                            style=" color: black; background-color: white; border: none; "><i
+                                                class="fas fa-search special-tag"></i></button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-list">
+                            <div class="row">
+                                <% for(let product of products){ const category=product.category;
+                                    if(category.status===true){ %>
+                                    <div class="col-lg-4 col-sm-6">
+                                        <div class="product-item">
+                                            <div class="pi-pic">
+                                                <img src="/productImages/resized/<%= product.image[0] %>" alt="">
+                                                <!-- <div class="sale pp-sale">Sale</div> -->
+                                                <div class="icon">
+                                                    <a href="#" onclick="addToWishlist('<%= product._id %>')"
+                                                        ><span><i style="color: #000;" class="icon_heart_alt"></i></span></a>
+                                                        
+
+                                                </div>
+                                                <ul>
+                                                    <!-- <li class="w-icon active"><a href=""
+                                                            onclick="addToCart('<%= product._id %>', 1 ,'<%=product.price %>')"><i
+                                                                class="icon_bag_alt"></i></a></li> -->
+                                                    <li class="quick-view"><a
+                                                            href="/singleProduct?id=<%= product._id %>">+
+                                                            Quick View</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                                <div class="catagory-name">
+                                                    <%= product.category.name %>
+                                                </div>
+                                                <a href="#">
+                                                    <h5>
+                                                        <%= product.title %>
+                                                    </h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    <%= product.price %>
+                                                        <span>
+                                                            <%= product.price %> + 100
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } }%>
+                            </div>
+                            <% if (products.length> 0) { %>
+                                <div class="col-lg-12">
+                                    <div class="pagination d-flex justify-content-center">
+                                        <% if (currentPage !==1) { %>
+                                            <a href="/shop?page=1<% if (cat) { %>&&cat=<%= cat %><% } %><% if (search) { %>&search=<%= search %><% } %>"
+                                                class="page-box">1</a>
+                                            <% } %>
+
+                                                <% if (currentPage> 2) { %>
+                                                    <a href="/shop?page=<%= prevPage %><% if (cat) { %>&cat=<%= cat %><% } %><% if (search) { %>&search=<%= search %><% } %>"
+                                                        class="page-box">
+                                                        <%= prevPage %>
+                                                    </a>
+                                                    <% } %>
+
+                                                        <a href="/shop?page=<%= currentPage %><% if (cat) { %>&cat=<%= cat %><% } %><% if (search) { %>&search=<%= search %><% } %>"
+                                                            class="page-box active">
+                                                            <%= currentPage %>
+                                                        </a>
+
+                                                        <% if (hasNextPage) { %>
+                                                            <a href="/shop?page=<%= nextPage %><% if (cat) { %>&cat=<%= cat %><% } %><% if (search) { %>&search=<%= search %><% } %>"
+                                                                class="page-box">
+                                                                <%= nextPage %>
+                                                            </a>
+                                                            <% } %>
+
+                                                                <% if (nextPage !==lastPage && currentPage !==lastPage
+                                                                    && lastPage !==0) { %>
+                                                                    <a href="/shop?page=<%= lastPage %><% if (cat) { %>&cat=<%= cat %><% } %><% if (search) { %>&search=<%= search %><% } %>"
+                                                                        class="page-box">
+                                                                        <%= lastPage %>
+                                                                    </a>
+                                                                    <% } %>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+            </div>
+        </section>
+        <!-- Product Shop Section End -->
+        <%- include("layouts/footer.ejs") %>
+
+            <script>
+                const user = "<%=user%>";
+                function sortProducts(sortOption) {
+                    // Extract the current URL parameters
+                    const urlParams = new URLSearchParams(window.location.search);
+
+                    // Set the 'sort' parameter to the selected sorting option
+                    urlParams.set('sort', sortOption);
+
+                    // Get the current category and search parameters from the URL
+                    const cat = urlParams.get('cat');
+                    const search = urlParams.get('search');
+
+                    // Convert the URL parameters back to a query string
+                    const queryString = urlParams.toString();
+
+                    // Construct the new URL with sorting and other parameters
+                    const newURL = `/shop?${queryString}`;
+
+                    // Redirect to the new URL
+                    window.location.href = newURL;
+                }
+                const addToCart = async (productId, quantity, singlePrice) => {
+                    try {
+                        event.preventDefault();
+                        const totalStock = document.getElementById(`product-${productId}`).value
+                        if (user) {
+                            const productData = await axios.post("/addToCart", {
+                                productId,
+                                quantity,
+                                singlePrice,
+                                totalStock
+                            });
+
+                            if (productData.data.count) {
+                                document.getElementById("cartCount").innerHTML = `<span class="icon-shopping_cart" ></span>${productData.data.count}`
+                                swal("Added to cart", "", "success");
+                            }
+                            if (productData.data.message) {
+                                swal("Added to cart", "", "success");
+                            }
+
+                            if (productData.data.cartMessage) {
+                                swal("Cart quantity reaches the limit");
+                            }
+                            return productData;
+                        } else {
+                            swal({
+                                title: "Please Login And Explore Our Products",
+                            }).then(() => {
+                                window.location.href = "/login";
+                            });
+                        }
+                    } catch (error) {
+                        console.log(error.message);
+                    }
+                };
+                const addToWishlist = async (productId) => {
+                    try {
+                        event.preventDefault();
+                        if (user) {
+                            const wishlistData = await axios.put("/wishlist", { productId });
+
+                            swal("Added to wishlist", "", "success");
+                            if (wishlistData.data.success === false) {
+                                swal("Product already exist in the wishlist");
+                            }
+                            const { count } = wishlistData.data
+                            if (count || count === 0) {
+                                document.getElementById("wishlistCount").innerHTML = `<span><i class="ion-ios-heart"></i></span>${count}`
+                            }
+                        } else {
+                            swal({
+                                title: "Please Login And Explore Our Products",
+                            }).then(() => {
+                                window.location.href = "/login";
+                            });
+                        }
+                    } catch (error) {
+                        console.log(error.message);
+                    }
+                };
+                function sortProducts(sortOption) {
+                    // Redirect to the shop page with the selected sorting option
+                    const searchParams = new URLSearchParams(window.location.search);
+                    searchParams.set('sort', sortOption);
+                    window.location.href = '/shop?' + searchParams.toString();
+                }
+
+
+            </script>

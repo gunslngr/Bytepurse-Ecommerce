@@ -1,0 +1,111 @@
+<aside class="navbar-aside" id="offcanvas_aside">
+    <div class="aside-top">
+        <a href="dashboard" class="brand-wrap">
+            <img src="/img/logo.png" class="logo" alt="Bytepurse" />
+        </a>
+        <div>
+            <!-- <button class="btn btn-icon btn-aside-minimize">
+              <i class="text-muted material-icons md-menu_open"></i>
+            </button> -->
+        </div>
+    </div>
+    <nav>
+        <ul class="menu-aside">
+            <li class="menu-item">
+                <a class="menu-link" href="dashboard"> <i class="icon material-icons md-home"></i> <span
+                        class="text">Dashboard</span> </a>
+            </li>
+            <li class="menu-item has-submenu">
+                <a class="menu-link" href="/admin/viewProduct">
+                    <i class="icon material-icons md-shopping_bag"></i>
+                    <span class="text">Products</span>
+                </a>
+                <div class="submenu">
+                    <a href="/admin/viewProduct">Product List</a>
+                    <a href="/admin/addProduct">Add product </a>
+                </div>
+            </li>
+            <li class="menu-item has-submenu">
+                <a class="menu-link" href="/admin/usersList">
+                    <i class="icon material-icons md-store"></i>
+                    <span class="text">Users</span>
+                </a>
+                <div class="submenu">
+                    <a href="#">Users list</a>
+                </div>
+            </li>
+            <li class="menu-item has-submenu">
+                <a class="menu-link" href="/admin/orderList">
+                    <i class="icon material-icons md-shopping_cart"></i>
+                    <span class="text">Orders</span>
+                </a>
+                <div class="submenu">
+                    <a href="/admin/orderList">Order list</a>
+                </div>
+            </li>
+            <li class="menu-item has-submenu">
+                <a class="menu-link" href="/admin/bannerList">
+                    <i class="icon material-icons md-comment"></i>
+                    <span class="text">Banners</span>
+                </a>
+                <div class="submenu">
+                    <a href="/admin/bannerList">Banners list</a>
+                    <a href="/admin/addBanner">Add Banner</a>
+                </div>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" href="/admin/viewCategory"> <i class="icon material-icons md-stars"></i> <span
+                        class="text">Categories</span> </a>
+            </li>
+            <li class="menu-item has-submenu">
+                <a class="menu-link" href="/admin/couponList">
+                    <i class="icon material-icons md-local_offer"></i>
+                    <span class="text">Coupons</span>
+                </a>
+                <div class="submenu">
+                    <a href="/admin/couponList">Coupon List</a>
+                    <a href="/admin/addCoupon">Add Coupons</a>
+                </div>
+            </li>
+
+        </ul>
+        <hr />
+        <!-- <ul class="menu-aside">
+            <li class="menu-item has-submenu">
+                <a class="menu-link" href="#">
+                    <i class="icon material-icons md-settings"></i>
+                    <span class="text">Settings</span>
+                </a>
+                <div class="submenu">
+                    <a href="#">Setting sample 1</a>
+                    <a href="#">Setting sample 2</a>
+                </div>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" href="#">
+                    <i class="icon material-icons md-local_offer"></i>
+                    <span class="text"> Starter page </span>
+                </a>
+            </li>
+        </ul> -->
+        <br />
+        <br />
+    </nav>
+</aside>
+
+<script>
+    var currentPathname = window.location.pathname;
+
+// Find the corresponding <li> element in the navigation
+var menuLinks = document.querySelectorAll(".menu-link");
+menuLinks.forEach(function (menuLink) {
+    var menuHref = menuLink.getAttribute("href");
+    
+    // Check if the current path matches the menu item's href attribute
+    if (menuHref === currentPathname) {
+        // Add a class to highlight the selected category
+        menuLink.parentElement.classList.add("active");
+    }
+});
+
+</script>

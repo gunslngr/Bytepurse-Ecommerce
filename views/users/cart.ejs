@@ -1,0 +1,247 @@
+<%- include('layouts/header.ejs') %>
+<%- include("layouts/navbar.ejs") %>
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="/shop">Shop</a>
+                        <span>Shopping Cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-table">
+                        <% if(userCart.length> 0){ %>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Image</th>
+                                        <th class="p-name">Product name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% userCart.forEach((product)=> { %>
+                                        <tr id="deleteId-<%= product._id %>">
+                                            <td class="product-remove"><a href=""
+                                                    onclick="deleteHandleCart('<%=product._id%>')"><span
+                                                        class="ti-close"></span></a></td>
+                                            <td class="cart-pic">
+                                                <% if (product.productId.image.length> 0) { %><img
+                                                        src="/productImages/resized/<%= product.productId.image[0] %>"
+                                                        alt="">
+                                                        <% } %>
+                                            </td>
+                                            <td class="cart-title">
+                                                <h5>
+                                                    <%= product.productId.title %>
+                                                </h5>
+                                                <!-- <p>
+                                                    <%= product.productId.description %>
+                                                </p> -->
+                                            </td>
+                                            <td class="p-price">₹<%= product.productId.price %>
+                                            </td>
+                                            <td class="quantity">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <button class="btn btn-outline-secondary minus-btn"
+                                                            type="button"
+                                                            onclick="handleMinusButtonClick('<%= product.productId._id %>')">-</button>
+                                                    </div>
+                                                    <input type="text" name="quantity"
+                                                        class="form-control text-center quantity-input"
+                                                        value="<%= product.quantity %>" min="1"
+                                                        max="<%= product.productId.quantity %>"
+                                                        data-product="<%= product.productId._id %>"
+                                                        data-price="<%= product.productId.price %>"
+                                                        data-stock-quantity="<%= product.productId.quantity %>">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary plus-btn" type="button"
+                                                            onclick="handlePlusButtonClick('<%= product.productId._id %>')">+</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="total" data-product="<%= product.productId._id %>">
+                                                <%= (product.productId.price * product.quantity).toFixed(2) %>
+                                            </td>
+                                        
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                            <% }else{ %>
+                                <div class="empty-cart" id="empty-cart">
+                                    <div class="empty-cart-content">
+                                        <h3>Your Cart is Empty</h3>
+                                        <p>Start exploring our products and add items to your Cart!</p>
+                                        <a href="/shop" class="btn btn-primary">Browse Products</a>
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <div class="empty-cart" id="empty-carts" style="display: none;">
+                                        <div class="empty-cart-content">
+                                            <h3>Your Cart is Empty</h3>
+                                            <p>Start exploring our products and add items to your Cart!</p>
+                                            <a href="/shop" class="btn btn-primary">Browse Products</a>
+                                        </div>
+                                    </div>
+                    </div>
+                    <% if(userCart.length>0){ %>
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-4 offset-lg-4">
+                                <div class="proceed-checkout">
+                                    <ul>
+                                        <li class="subtotal">Subtotal </li>
+                                        <li class="cart-total">Total <b>₹</b><span id="grandTotal">
+                                                <%= userData.grandTotal %>
+                                            </span></li>
+                                    </ul>
+                                    <a href="/checkout" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include('layouts/footer.ejs') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      function convertToCSV(data) {
+    const headers = Array.from(data.querySelectorAll('#tablehead th')).map(th => th.textContent);
+    const rows = Array.from(data.querySelectorAll('tbody tr')).map(row => {
+      return Array.from(row.querySelectorAll('td')).map(td => td.textContent);
+    });
+    return [headers, ...rows];
+  }
+
+  function downloadCSV() {
+    const startDate = document.getElementById('startDatePicker').value;
+    const endDate = document.getElementById('endDatePicker').value;
+
+    // Validate if both start and end dates are selected
+    if (!startDate || !endDate) {
+      swal("Please select both start and end dates.");
+      return;
+    }
+
+    const tableData = convertToCSV(document.getElementById("tableReport"));
+    const filename = "sales_report.csv";
+
+    // Convert data to CSV format
+    const csvContent = tableData.map(row => row.join(',')).join('\n');
+
+    // Add a custom header to specify the encoding for the rupee symbol
+    // const csvWithHeader = '\ufeff' + 'data:text/csv;charset=utf-8,' + csvContent;
+
+    // Create a Blob with the CSV data
+    const blob = new Blob([csvContent], { type: "text/csv" });
+
+    // Generate a download URL for the Blob
+    const url = URL.createObjectURL(blob);
+
+    // Create a link with the download URL and trigger a click event on it to download the CSV file
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+
+    // Cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+
+  
+
+
+
+  function printDiv(divName) {
+    const startDate = document.getElementById('startDatePicker').value;
+    const endDate = document.getElementById('endDatePicker').value;
+
+    // Validate if both start and end dates are selected
+    if (!startDate || !endDate) {
+      swal("Please select both start and end dates.");
+      return;
+    }
+    const printContents = document.getElementById(divName).innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  }
+
+  const validateDates = () => {
+    const startDate = new Date(document.getElementById('startDatePicker').value);
+    const endDate = new Date(document.getElementById('endDatePicker').value);
+    const currentDate = new Date();
+
+    if (startDate > endDate || startDate > currentDate) {
+      document.getElementById('dateError').style.display = 'block';
+      document.getElementById('endDatePicker').value = '';
+      return false;
+    } else {
+      document.getElementById('dateError').style.display = 'none';
+      return true;
+    }
+  };
+
+  const selectedDate = async () => {
+    try {
+      if (!validateDates()) {
+        return;
+      }
+
+      const startDate = document.getElementById('startDatePicker').value;
+      const endDate = document.getElementById('endDatePicker').value;
+      const response = await axios.post('/admin/salesReport', { startDate, endDate });
+      const salesReport = response.data.selectedDate;
+      const reportTable = document.getElementById('tableReport');
+      const head = document.getElementById('tablehead');
+      let count = 1;
+      const tableData = salesReport
+        .map((data) => `
+          <tr>
+            <td>${count++}</td>
+            <td><b>${data.orderID}</b></td>
+            <td><b>${data.productName}</b></td>
+            <td>${data.productPrice}</td>
+            <td>${data.productQuantity}</td>
+            <td>${data.paymentMethod}</td>
+            <td>${data.total}</td>
+            <td>${moment(data.date).format('DD/MM/YYYY')}</td>
+            <td>${data.status}</td>
+          </tr>
+        `)
+        .join('');
+      reportTable.querySelector('tbody').innerHTML = tableData;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+    </script>
+

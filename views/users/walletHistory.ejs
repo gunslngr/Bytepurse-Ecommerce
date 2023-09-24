@@ -1,0 +1,140 @@
+<%- include("layouts/header.ejs") %>
+    <%- include("layouts/navbar.ejs") %>
+        <section>
+            <div class="container mt-4">
+                
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                      <!-- Table content here -->
+                    </table>
+                  </div>
+                
+                  <!-- Move the buttons to the end -->
+                  <div class="d-flex justify-content-between mt-3">
+                   
+                    <a class="btn btn-md btn-success" data-toggle="modal" data-target="#form" style="color: white;">Add to wallet</a>
+                    <a href="/userProfile" class="btn btn-md btn-success">Back</a>
+                  </div>
+                  <h3></h3>
+                <div class="row">
+                    <div class="col-12">
+                       
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <% walletData.forEach((wallet)=> { %>
+
+                                        <tr>
+                                            <td>
+                                                <%= wallet.walletHistory.date.toISOString().substr(0, 10) %>
+                                            </td>
+                                            <% if (wallet.walletHistory.amount> 0) { %>
+                                                <td class="text-success">₹<%= wallet.walletHistory.amount %>
+                                                </td>
+                                                <% } else { %>
+                                                    <td class="text-danger">₹<%= wallet.walletHistory.amount %>
+                                                    </td>
+                                                    <% } %>
+                                                        <td>
+                                                            <%= wallet.walletHistory.description %>
+                                                        </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade rounded-0" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered rounded-0" role="document">
+                    <div class="modal-content rounded-0">
+                        <form id="wallet-form">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="email1">Enter Amount</label>
+                                    <input type="number" class="form-control" id="amount" aria-describedby="emailHelp"
+                                        placeholder="Enter Amount">
+
+                                    <p id="err" class="text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-top-0 d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success rounded-0">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--/.container-->
+
+
+            <div class="modal fade top rounded-0" id="successModal" tabindex="-1" role="dialog"
+                aria-labelledby="successModalLabel" aria-hidden="true" data-backdrop="true">
+                <div class="modal-dialog modal-dialog-centered modal-full-width modal-full-width" role="document">
+                    <div class="modal-content rounded-0">
+                        <div class="modal-header bg-danger rounded-0">
+                            <h5 class="modal-title" id="successModalLabel">Payment failed</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Unfortunately couldn't complete payment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <%- include("layouts/footer.ejs") %>
+
+            <!-- Include Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script>
+                const err = document.getElementById('err');
+
+                document.getElementById('wallet-form').addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const amountField = document.getElementById('amount');
+                    const amount = parseFloat(amountField.value.trim());
+
+                    if (isNaN(amount) || amount <= 0) {
+                        err.innerHTML = 'Amount must be a positive number!';
+                        amountField.value = ''; // Clear the input field
+                        return;
+                    }
+
+                    try {
+                        const response = await axios.post('/add-to-wallet', { amount });
+
+                        if (response.data.success) {
+                            window.location = '/walletHistory';
+                        } else {
+                            console.error('Failed to add funds to the wallet.');
+                        }
+                    } catch (error) {
+                        console.error('An error occurred:', error.message);
+                    }
+                });
+
+                // Add an event listener to the input to clear the error message on input change
+                document.getElementById('amount').addEventListener('input', function () {
+                    err.innerHTML = '';
+                });
+            </script>
