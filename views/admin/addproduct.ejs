@@ -111,12 +111,16 @@
     <script src="/assets/js/vendors/select2.min.js"></script>
     <script src="/assets/js/vendors/perfect-scrollbar.js"></script>
     <script src="/assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Main Script -->
     <script src="/assets/js/main.js?v=1.1" type="text/javascript"></script>
     <script>
       const productName = document.getElementById("product_name");
+    
       function limitImageUpload(input) {
         const maxImages = 5; // Maximum allowed images
+    
         if (input.files.length > maxImages) {
           Swal.fire({
             icon: 'error',
@@ -124,17 +128,21 @@
             text: `You can only upload up to ${maxImages} images.`,
             confirmButtonText: 'OK'
           });
-          input.value = ""; // Clear the input to prevent uploading more images
+    
+          // Clear the input to prevent uploading more images
+          input.value = "";
         }
       }
+    
       productName.addEventListener("input", () => {
         let product_name = productName.value.trim();
         if (product_name === "") {
-          productName.setCustomValidity("Product name name cannot be null");
+          productName.setCustomValidity("Product name cannot be null");
         } else {
           productName.setCustomValidity("");
         }
       });
+    
       const description = document.getElementById("description");
       description.addEventListener("input", () => {
         let descriptionValue = description.value.trim();
@@ -145,6 +153,7 @@
         }
       });
     </script>
+    
 </body>
 
 </html>
