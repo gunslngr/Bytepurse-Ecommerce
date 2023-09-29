@@ -6,10 +6,13 @@ const Order = require("../models/orderModel");
 const Razorpay = require("razorpay");
 const mongoose = require("mongoose");
 const moment = require("moment");
-require("dotenv").config();
+
+const dotenv=require("dotenv")
+dotenv.config({ path: '../.env' });
+
 var instance = new Razorpay({
-  key_id: 'rzp_test_uamgEp3sMl3d1Q',
-  key_secret: 'ZJpB15qzBX6PMpk2UY4DtH6g',
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 
@@ -211,7 +214,7 @@ const onlineVerifyPayment = async (req, res) => {
     let userData = await User.findById({ _id: userId });
     const details = req.body;
     const crypto = require("crypto");
-    let hmac = crypto.createHmac("sha256", 'ZJpB15qzBX6PMpk2UY4DtH6g');
+    let hmac = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
     hmac.update(
       details['payment[razorpay_order_id]'] +
         "|" +

@@ -1,4 +1,6 @@
-require("dotenv").config();
+const dotenv=require("dotenv")
+dotenv.config({ path: '../.env' });
+
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const mongoose = require('mongoose');
@@ -7,7 +9,6 @@ const fs = require("fs");
 const ejs = require("ejs");
 const puppeteer = require("puppeteer");
 const crypto = require('crypto');
-
 
 const User = require('../models/userModel');
 const Product = require("../models/productModel");
@@ -26,8 +27,8 @@ const sendEmail = async (name, email, user_id) => {
             secure: false,
             requireTLS: true,
             auth: {
-                user: "mhdsaheer3117@gmail.com",
-                pass: "pvuofgxtgrzeivwq",
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD,
             },
         });
         const options = {

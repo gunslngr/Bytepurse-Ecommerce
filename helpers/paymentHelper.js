@@ -4,6 +4,9 @@ const Razorpay = require('razorpay');
 
 // const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = process.env
 // Razorpay
+const dotenv = require('dotenv').config()
+
+console.log(process.env.EMAIL_USER);
 var instance = new Razorpay({
     key_id:'rzp_test_uamgEp3sMl3d1Q',
     key_secret:'ZJpB15qzBX6PMpk2UY4DtH6g',

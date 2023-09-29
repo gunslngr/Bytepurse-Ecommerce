@@ -31,10 +31,10 @@ const verifyLogin = async (req, res) => {
         req.session.admin = email;
         res.redirect("/admin/dashboard");
       } else {
-        res.render("adminLogin", { errMessage: "Password is incorrect" });
+        res.render("adminlogin", { errMessage: "Password is incorrect" });
       }
     } else {
-      res.render("adminLogin", { errMessage: "email is incorrect" });
+      res.render("adminlogin", { errMessage: "email is incorrect" });
     }
   } catch (error) {
     console.log(error.message);
