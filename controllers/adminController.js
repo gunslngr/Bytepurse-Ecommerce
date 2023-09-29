@@ -8,11 +8,12 @@ const CONTENTS_PER_PAGE = 5;
 const SALES_PER_PAGE = 10;
 
 
-require("dotenv").config();
+const dotenv=require("dotenv")
+dotenv.config({ path: '../.env' });
 
 let admin = {
-  email: "admin@gmail.com",
-  password: "123456",
+  email: process.env.ADMIN,
+  password: process.env.ADMIN_PASSWORD,
 };
 
 const loadLogin = async (req, res) => {

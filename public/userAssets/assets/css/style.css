@@ -3699,6 +3699,11 @@ input:focus {
   color: #4e4e4e;
   font-size: 19px;
   cursor: pointer;
+  transition: background-position 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+.header-bottom .header-right .favorit-items i:hover {
+  color: white;
+  background-color:#242424;
 }
 
 /* line 222, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_headerMenu.scss */
@@ -3739,6 +3744,32 @@ input:focus {
   color: #4e4e4e;
   font-size: 14px;
   cursor: pointer;
+  transition: background-position 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.header-bottom .header-right .shopping-card i:hover {
+  color: white;
+  background-color:#242424;
+}
+
+
+/* Default styling */
+.profilebox {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color:  #3f3e3e;
+  background-color: white;
+  border:  1px solid #eeeeee;
+  transition: background-position 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+  
+
+
+/* Hover effect */
+.profilebox:hover {
+  color: white;
+  background-color:#242424;
 }
 
 @media (max-width: 767px) {

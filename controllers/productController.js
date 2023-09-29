@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
 const asyncHandler = require("express-async-handler");
+const multer = require('multer');
 
 
 const viewProduct = async (req, res) => {

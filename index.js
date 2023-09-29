@@ -1,19 +1,19 @@
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/BytePurs");
+// const mongoose = require("mongoose");
+// mongoose.connect("mongodb://127.0.0.1:27017/BytePurse");
 
 const dotenv = require('dotenv')
 dotenv.config()
-// const mongoose = require("mongoose")
-// mongoose.connect(process.env.MONGO)
-// .then(()=>console.log("connected to database"))
-// .catch(()=>console.log("error..!! failed to connect database"))
+const mongoose = require("mongoose")
+mongoose.connect(process.env.MONGO)
+.then(()=>console.log("connected to database"))
+.catch(()=>console.log("error..!! failed to connect database"))
 
 const noCache = require("./middleware/cache");
 const localSession = require("./middleware/userSession");
 const express = require("express");
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 
 //remove cache

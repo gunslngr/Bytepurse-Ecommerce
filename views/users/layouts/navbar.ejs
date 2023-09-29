@@ -22,7 +22,7 @@
                             </div>
                             <div class="header-info-right">
                                 <ul>
-                                    
+
                                     <li><a href="#">Bytepurse@gmail.com</a></li>
                                 </ul>
                             </div>
@@ -62,32 +62,30 @@
                                         </div>
                                     </div>
                                 </li> -->
-                                <%  if(locals.session.user){%>
-                                <li class=" d-none d-xl-block">
-                                    <div class="favorit-items">
-                                        <a href="/wishlist"><i class="far fa-heart"></i></a>
-                                        
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="shopping-card">
-                                        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    
-                                    <a class="menu-link" href="/userprofile">
-                                      <i class="icon material-icons md-person"></i>
-                                      <span class="text">Account</span>
-                                  </a>
-                                  </li>
-                                  <%}%>
-                                <!-- <li > <a href="#" class=""></a></li> -->
-                                <% if(!locals.session.user) { %>
-                                    <li class="d-none d-lg-block"><a href="/login" class="btn header-btn">Sign
-                                            in</a></li>
+                                <% if(locals.session.user){%>
+                                    <li class=" d-none d-xl-block">
+                                        <div class="favorit-items">
+                                            <a href="/wishlist"><i class="far fa-heart"></i></a>
 
-                                    <% } %>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="shopping-card">
+                                            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+                                        </div>
+                                    </li>
+                                    <li >
+                                        <a class="profilebox" href="/userprofile">
+                                            <span class="text">Account</span>
+                                        </a>
+                                    </li>
+                                    <%}%>
+                                        <!-- <li > <a href="#" class=""></a></li> -->
+                                        <% if(!locals.session.user) { %>
+                                            <li class="d-none d-lg-block"><a href="/login" class="btn header-btn">Sign
+                                                    in</a></li>
+
+                                            <% } %>
                             </ul>
                         </div>
                         <!-- Mobile Menu -->
