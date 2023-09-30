@@ -486,27 +486,52 @@ const salesReportLoad = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const totalOrders = await Order.countDocuments();
     const totalPages = Math.ceil(totalOrders / SALES_PER_PAGE);
-    const firstOrder = await Order.find().sort({ createdAt: 1 });
-    const lastOrder = await Order.find().sort({ createdAt: -1 });
-    const orders = await Order.find()
+    
+    // Add a $match stage to filter orders by status
+    const orders = await Order.find({ status: 'Delivered' })
       .skip((page - 1) * SALES_PER_PAGE)
       .limit(SALES_PER_PAGE)
       .sort({ createdAt: -1 })
       .populate("products.productId");
-    res.render("salesReport", { firstOrder: moment(firstOrder[0].createdAt).format("MM/DD/YYYY"),
-    lastOrder: moment(lastOrder[0].createdAt).format("MM/DD/YYYY"), totalPages, req, moment,orders });
+
+    if (orders.length === 0) {
+      // Handle the case where no delivered orders are found
+      res.render("salesReport", { totalPages, req, moment, orders: [] });
+      return;
+    }
+
+    const firstOrder = orders[orders.length - 1];
+    const lastOrder = orders[0];
+
+    res.render("salesReport", {
+      firstOrder: moment(firstOrder.createdAt).format("MM/DD/YYYY"),
+      lastOrder: moment(lastOrder.createdAt).format("MM/DD/YYYY"),
+      totalPages,
+      req,
+      moment,
+      orders,
+    });
   } catch (error) {
     console.log(error.message);
-
+    // Handle other errors as needed
+    res.status(500).send('Internal Server Error');
   }
 };
+
 const datewiseReport = async (req, res) => {
   try {
     const { startDate, endDate } = req.body;
+
+    // Convert selected start and end dates to Date objects
+    const startDateTime = new Date(startDate);
+    const endDateTime = new Date(endDate);
+
+    // Add a match stage to filter orders by date and status
     const selectedDate = await Order.aggregate([
       {
         $match: {
-          createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
+          createdAt: { $gte: startDateTime, $lte: endDateTime },
+          status: { $regex: /^delivered$/i } // Case-insensitive match for "delivered"
         },
       },
       {
@@ -538,13 +563,15 @@ const datewiseReport = async (req, res) => {
         },
       },
     ]);
-
-    res.status(200).json({ selectedDate: selectedDate });
+    console.log('Start Date:', startDateTime);
+    console.log('End Date:', endDateTime);
+    res.status(200).json({ selectedDate });
   } catch (error) {
     console.log(error.message);
-
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 module.exports = {
