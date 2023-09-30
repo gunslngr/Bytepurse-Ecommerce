@@ -102,7 +102,8 @@
       margin-bottom: 10px;
       /* Increase the margin for a larger gap */
     }
-    .add-funds-button{
+
+    .add-funds-button {
       background-color: black;
       color: white;
       border: none;
@@ -238,7 +239,8 @@
                       <% } else { %>
                         <div class="add-funds">
                           <p style="margin-top: 20px;">Not enough funds in wallet please add fund.</p>
-                          <button id="add-funds-button" class="add-funds-button" data-toggle="modal" data-target="#form">Add Funds</button>
+                          <button id="add-funds-button" class="add-funds-button" data-toggle="modal"
+                            data-target="#form">Add Funds</button>
                         </div>
                         <% } %>
 
@@ -433,6 +435,20 @@
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const paymentMethodCheckboxes = document.querySelectorAll('input[name="paymentMethod"]');
+
+          paymentMethodCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('click', function () {
+              // Uncheck other checkboxes when a checkbox is clicked
+              paymentMethodCheckboxes.forEach(function (otherCheckbox) {
+                if (otherCheckbox !== checkbox) {
+                  otherCheckbox.checked = false;
+                }
+              });
+            });
+          });
+        });
         const err = document.getElementById('err');
 
         document.getElementById('wallet-form').addEventListener('submit', async function (event) {

@@ -121,24 +121,28 @@ const applyCoupon = async (req, res) => {
 const placeOrder = async (req, res) => {
   try {
     const { address, paymentMethod, grandTotal } = req.body;
-    const { user,couponCode,discountAmount } = req.session;
+    const { user, couponCode, discountAmount } = req.session;
     const userData = await User.findOne({ email: user });
-    const products = userData.cart.map((cartItem) => ({
-      productId: cartItem.productId,
-      quantity: cartItem.quantity,
-      price: cartItem.price,
+    
+    const products = await Promise.all(userData.cart.map(async (cartItem) => {
+      const productData = await Product.findById(cartItem.productId);
+      return {
+        productId: cartItem.productId,
+        quantity: cartItem.quantity,
+        price: productData.price,
+      };
     }));
-    const status =
-      paymentMethod === "COD" || paymentMethod === "WALLET"
-        ? "Placed"
-        : "Pending";
+
+    const status = paymentMethod === "COD" || paymentMethod === "WALLET" ? "Placed" : "Pending";
     const currentTime = new Date().toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
     });
+
     const expectedDeliveryDate = new Date();
     expectedDeliveryDate.setDate(expectedDeliveryDate.getDate() + 3);
+
     const order = new Order({
       user: userData._id,
       products: products,
@@ -146,20 +150,20 @@ const placeOrder = async (req, res) => {
       shipAddress: address,
       status: status,
       method: paymentMethod,
-      discount: discountAmount || null, // Set discount to null if discountAmount is falsy
-      coupon: couponCode || null, // Set coupon to null if couponCode is falsy
-      date: new Date()
-        .toLocaleDateString("en-us", {
-          weekday: "short",
-          day: "numeric",
-          year: "numeric",
-          month: "short",
-        })
-        .replace(",", ""),
+      discount: discountAmount || null,
+      coupon: couponCode || null,
+      date: new Date().toLocaleDateString("en-us", {
+        weekday: "short",
+        day: "numeric",
+        year: "numeric",
+        month: "short",
+      }).replace(",", ""),
       time: currentTime,
       expectedDelivery: expectedDeliveryDate.toDateString(),
     });
+
     await order.save();
+    
     let orderId = order._id;
     let totalAmount = order.total;
     if (status == "Placed") {

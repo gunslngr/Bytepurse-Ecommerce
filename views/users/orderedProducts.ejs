@@ -101,7 +101,7 @@
                 <% } %>
                 
                 <p><b>Ordered Address :</b><%= order.shipAddress %></p>
-                <h5>product Price: ₹ <%= product.productId.price %></h5>
+                <h5>product Price: ₹ <%= product.price %></h5>
                 <h5>Total Price: ₹ <%= order.total-order.discount %></h5>
                 <% if (order.status !== "Cancelled" && order.status !== "Return Pending") { %>
                 <h6 class="text-success">Status: <%= order.status %></h6>
